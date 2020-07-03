@@ -1,4 +1,5 @@
 import React, { useState, useRef, useLinking, useEffect } from 'react';
+import { ImageBackground } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-native";
 import { Container, Content, Item, Input, Button, Text, Spinner, View, Icon } from 'native-base';
@@ -6,8 +7,6 @@ import { createForm } from 'rc-form';
 
 import i18n from '../../../i18n/i18n'
 import { auth as AuthActions } from '../../../services/Auth/AuthActions'
-import login_background from '../../../assets/images/login-background.jpg'
-import { ImageBackground } from 'react-native';
 
 const Login = ({ match, form }) => {
   const dispatch = useDispatch()
@@ -29,8 +28,7 @@ const Login = ({ match, form }) => {
   }
 
   return (
-    <ImageBackground
-      source={login_background}
+    <View
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -68,7 +66,7 @@ const Login = ({ match, form }) => {
           <Text style={{ fontWeight: 'bold' }}>{i18n.t('button.signup')}</Text>
         </Link>
       </View>
-    </ImageBackground>
+    </View>
   )
 }
 
