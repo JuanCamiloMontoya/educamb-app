@@ -1,13 +1,15 @@
-import { fork, all } from 'redux-saga/effects';
+import { fork, all } from 'redux-saga/effects'
 
-import AuthSaga from '../services/Auth/AuthSaga';
-import UserSaga from '../services/User/UserSaga';
-import UtilitiesSaga from '../services/Utilities/UtilitiesSaga';
+import auth from '../services/Auth/AuthSaga'
+import user from '../services/User/UserSaga'
+import utilities from '../services/Utilities/UtilitiesSaga'
+import thematic from '../services/Thematic/ThematicSaga'
 
 export default function* rootSaga() {
   yield all([
-    fork(AuthSaga),
-    fork(UtilitiesSaga),
-    fork(UserSaga)
-  ]);
+    fork(auth),
+    fork(user),
+    fork(utilities),
+    fork(thematic)
+  ])
 }

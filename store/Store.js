@@ -14,7 +14,7 @@ export default (history) => {
   const routeMiddleware = routerMiddleware(history)
   let middleware = [sagaMiddleware, routeMiddleware]
 
-  if (!false) 
+  if (false) 
     middleware = [...middleware, logger]
 
   const store = createStore(

@@ -9,7 +9,7 @@ export const { utilities } = createActions({
     GET_COUNTRYS: () => ({}),
     GET_COUNTRYS_RESPONSE: (countrys) => ({ countrys }),
 
-    GET_CITYS: (countryId) => ({countryId}),
+    GET_CITYS: (countryId) => ({ countryId }),
     GET_CITYS_RESPONSE: (citys) => ({ citys })
   }
 })

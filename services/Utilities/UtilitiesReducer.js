@@ -5,6 +5,7 @@ export const INITIAL_STATE = {
   loading: false,
   countrys: [],
   citys: [],
+  routeName: '',
   error: {
     getCountrys: false,
     getCities: false
@@ -13,7 +14,7 @@ export const INITIAL_STATE = {
 
 const reducer = handleActions({
   UTILITIES: {
-    
+
     LANGUAGE: (state, { payload: { } }) => ({ ...state, loading: true }),
     LANGUAGE_RESPONSE: {
       next(state, { payload: { languages } }) {
@@ -24,20 +25,20 @@ const reducer = handleActions({
       }
     },
 
-    GET_COUNTRYS: (state, { payload: { } }) => ({ 
-      ...state, loading: true, error: { ...state.error, getCountrys: false } 
+    GET_COUNTRYS: (state, { payload: { } }) => ({
+      ...state, loading: true, error: { ...state.error, getCountrys: false }
     }),
     GET_COUNTRYS_RESPONSE: {
       next(state, { payload: { countrys } }) {
-        return { ...state, countrys, loading: false}
+        return { ...state, countrys, loading: false }
       },
       throw(state, action) {
         return { ...state, error: { ...state.error, getCountrys: true }, loading: false }
       }
     },
 
-    GET_CITYS: (state, { payload: { } }) => ({ 
-      ...state, citys: [], loading: true, error: { ...state.error, getCities: false } 
+    GET_CITYS: (state, { payload: { } }) => ({
+      ...state, citys: [], loading: true, error: { ...state.error, getCities: false }
     }),
     GET_CITYS_RESPONSE: {
       next(state, { payload: { citys } }) {
@@ -46,7 +47,9 @@ const reducer = handleActions({
       throw(state, action) {
         return { ...state, error: { ...state.error, getCities: true }, loading: false }
       }
-    }
+    },
+    
+    SET_ROUTE_NAME: (state, { payload: { routeName } }) => ({ ...state, routeName })
 
   }
 },
