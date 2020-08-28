@@ -1,29 +1,30 @@
 import React, { useState, useRef, useLinking, useEffect } from 'react';
-import { Container, View } from 'native-base';
-import { NativeRouter, Route } from "react-router-native";
-import { ImageBackground } from 'react-native';
+import { Container, View, Content } from 'native-base';
+import { NativeRouter, Route, withRouter, Router, Switch } from "react-router-native";
+import { ImageBackground, StatusBar } from 'react-native';
 
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import login_background from '../../assets/images/login-background.jpg'
 
-const Public = ({ }) => {
+const Public = ({ history }) => {
 
   useEffect(() => {
 
   })
 
   return (
-
-
-    <NativeRouter>
+    <Container>
+      <StatusBar barStyle="light-content" />
       <ImageBackground source={login_background} style={{ flex: 1 }}>
-        <Route exact path="/" component={Login} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+        </Switch>
       </ImageBackground>
-    </NativeRouter>
+    </Container>
   )
 }
 
-export default Public 
+export default withRouter(Public)

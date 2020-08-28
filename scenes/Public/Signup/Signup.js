@@ -13,13 +13,13 @@ import PickerSelect from '../../../components/PickerSelect/PickerSelect'
 import FormItem from '../../../components/FormItem/FormItem'
 
 const initialValuesDev = {
-  name: 'Yeison',
-  lastname: 'Gomez',
+  name: 'Yulder',
+  lastname: 'Canamejoy',
   phone: '2174760746',
   country: 'Colombia',
   city: 'Bogotá',
   language: 'es',
-  email: 'yeisom40@gmail.com',
+  email: 'yulder@gmail.com',
   password: '12345',
   repitPassword: '12345'
 }
@@ -31,19 +31,20 @@ const Signup = ({ form }) => {
   const { loading, error } = useSelector(state => state.auth)
   const [isFormError, setFormError] = useState()
 
-  /*  useEffect(() => {
- 
-     if (__DEV__)
-       setFieldsInitialValue(initialValuesDev)
- 
-   }, []) */
+  useEffect(() => {
+
+    if (__DEV__)
+      setFieldsInitialValue(initialValuesDev)
+
+  }, [])
 
   const submit = (e) => {
     if (!loading) {
       validateFields({ suppressWarning: true }, (error, value) => {
         if (!error) {
           setFormError(false)
-          dispatch(AuthActions.signup(value))
+          dispatch(AuthActions.setLogged(true))
+          /* dispatch(AuthActions.signup(value)) */
         } else
           setFormError(true)
       });

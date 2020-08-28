@@ -1,16 +1,18 @@
-import React, { useState, useRef, useLinking, useEffect } from 'react';
-import { ImageBackground } from 'react-native';
+import React, { useState, useRef, useLinking, useEffect } from 'react'
+import { ImageBackground } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from "react-router-native";
-import { Container, Content, Item, Input, Button, Text, Spinner, View, Icon } from 'native-base';
-import { createForm } from 'rc-form';
+import { Link } from "react-router-native"
+import { Container, Content, Item, Input, Button, Text, Spinner, View, Icon } from 'native-base'
+import { createForm } from 'rc-form'
 
 import i18n from '../../../i18n/i18n'
-import { auth as AuthActions } from '../../../services/Auth/AuthActions'
+import { auth as authActions } from '../../../services/Auth/AuthActions'
 
 const Login = ({ match, form }) => {
+
   const dispatch = useDispatch()
-  const { getFieldDecorator, setFieldsValue } = form;
+  const { login } = authActions
+  const { getFieldDecorator, setFieldsValue } = form
 
   const { loading, error } = useSelector(state => state.auth)
   const [isFormError, setFormError] = useState()
@@ -20,10 +22,10 @@ const Login = ({ match, form }) => {
       form.validateFields({ suppressWarning: true }, (error, value) => {
         if (!error) {
           setFormError(false)
-          dispatch(AuthActions.login(value.email, value.password))
+          dispatch(login(value.email, value.password))
         } else
           setFormError(true)
-      });
+      })
     }
   }
 
@@ -40,13 +42,19 @@ const Login = ({ match, form }) => {
       <Text style={{ fontSize: 35, fontWeight: 'bold', marginBottom: '10%' }}>Iniciar Sesión</Text>
       <Item regular style={{ borderColor: '#000', marginBottom: 20, backgroundColor: '#FFF' }}>
         <Icon name='account-outline' type='MaterialCommunityIcons' />
-        {getFieldDecorator('email', { rules: [{ required: true }] })(
+        {getFieldDecorator('email', {
+          rules: [{ required: true }],
+          initialValue: 'jua.montoya@udla.edu.co'
+        })(
           <Input type="email" placeholder={i18n.t('label.user')} onChangeText={email => setFieldsValue({ email })} />
         )}
       </Item>
       <Item regular style={{ borderColor: '#000', marginBottom: 20, backgroundColor: '#FFF' }}>
         <Icon active name='key' />
-        {getFieldDecorator('password', { rules: [{ required: true }] })(
+        {getFieldDecorator('password', {
+          rules: [{ required: true }],
+          initialValue: '12345678'
+        })(
           <Input secureTextEntry placeholder={i18n.t('label.password')} onChangeText={password => setFieldsValue({ password })} />
         )}
       </Item>

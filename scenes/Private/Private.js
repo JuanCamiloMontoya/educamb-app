@@ -1,50 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { StatusBar, ImageBackground } from 'react-native';
+import { Container, Header, Body, Title } from 'native-base';
 
-import i18n from '../../i18n/i18n'
-import { auth as AuthActions } from '../../services/Auth/AuthActions'
+import { Route, withRouter, Switch, BackButton, Router, useHistory, MemoryRouter } from 'react-router-native';
+import Profile from './Profile/Profile';
+import Home from './Home/Home';
+import Forum from './Forum/Forum';
+import BottomTabBar from '../../components/BottomTabBar/BottomTabBar';
+import { wp } from '../../common/constants/_Mixins';
+import CourseList from './Home/CourseList/CourseList';
+import Course from './Home/CourseList/Course/Course';
+import headerBg from '../../assets/images/header-bg.jpg'
 
-export default function Private(props) {
+const Private = (props) => {
 
-  const dispatch = useDispatch()
-
-  const logout = () => {
-    dispatch(AuthActions.logout())
-  }
+  const history = useHistory()
 
   return (
     <Container>
-      <Header>
-        <Button onPress={logout}>
-          <Text>{i18n.t('button.logout')}</Text>
-        </Button>
-      </Header>
-      <Content />
-      <Footer>
-        <FooterTab>
-          <Button>
-            <Icon name="apps" />
-          </Button>
-          <Button>
-            <Icon name="camera" />
-          </Button>
-          <Button active>
-            <Icon active name="navigate" />
-          </Button>
-          <Button>
-            <Icon name="person" />
-          </Button>
-        </FooterTab>
-      </Footer>
+      <StatusBar backgroundColor="#1F8209" />
+      <BackButton>
+        <ImageBackground source={headerBg} style={{ flex: 1 }} resizeMode="cover" >
+          <Router history={history}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/home/course-list" component={CourseList} />
+              <Route exact path="/home/course" component={Course} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/forum" component={Forum} />
+            </Switch>
+          </Router>
+        </ImageBackground>
+        <BottomTabBar />
+      </BackButton>
     </Container>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+export default Private
