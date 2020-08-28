@@ -28,7 +28,7 @@ const label = {
   user: 'User',
   email: 'Correo',
   password: 'Contraseña',
-  repitPassword: 'Repitir contraseña',
+  repitPassword: 'Repetir contraseña',
   name: 'Nombres',
   lastname: 'Apellidos',
   phone: 'Celular',
