@@ -7,21 +7,21 @@ export class Api {
 
   post(url, data, formData) {
     let dataBody
-    
-    if(formData){
+
+    if (formData) {
       dataBody = new FormData();
       Object.keys(data).map(key => {
-        if(!Array.isArray(data[key])){
+        if (!Array.isArray(data[key])) {
           const isFile = data[key] && data[key].size
           const isJson = typeof data[key] === 'object'
-          
-          dataBody.append(key, isFile || !isJson ? data[key]: JSON.stringify(data[key]));
-        } else 
+
+          dataBody.append(key, isFile || !isJson ? data[key] : JSON.stringify(data[key]));
+        } else
           data[key].forEach(item => dataBody.append(key, item))
       })
     } else
       dataBody = JSON.stringify(data);
-    
+
     return fetch(`${API_URL}${url}`, {
       method: 'POST',
       headers: (formData ? {
@@ -33,7 +33,7 @@ export class Api {
         }),
       body: dataBody
     }).then(async response => {
-      if (response.status === 404) {
+      if (response.status === 401) {
         store.dispatch(auth.logout());
         return response;
       }
@@ -44,12 +44,12 @@ export class Api {
 
   isJson(str) {
     try {
-        JSON.parse(str);
+      JSON.parse(str);
     } catch (e) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   put(url, data, header) {
     let isFormData = data instanceof FormData;
@@ -68,34 +68,31 @@ export class Api {
       ),
       body: isFormData ? data : JSON.stringify(data)
     }).then(async response => {
-      if (response.status === 404) {
+      if (response.status === 401) {
         store.dispatch(auth.logout());
         return response;
       }
       response.payload = await response.json()
-      console.log(response);
       return response;
     }).catch(err => err)
   }
 
-  get(url, params) {
-    url = new URL(`${API_URL}${url}`);
+  async get(url, params) {
+    const token = await Token.get()
     if (params)
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-    return fetch(url, {
+    return fetch(`${API_URL}${url}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${Token.get()}`
+        'Authorization': `Bearer ${token}`
       }
     }).then(async response => {
-      if (response.status === 404) {
+      if (response.status === 401) {
         store.dispatch(auth.logout());
         return response;
       }
-      response.payload = await response.json()
-      console.log(response);
-      return response;
-    }).catch(err => err)
+      return await response.json()
+    }).catch(err => { console.log(err) })
   }
 
 }

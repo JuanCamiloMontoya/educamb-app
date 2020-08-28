@@ -10,14 +10,14 @@ export const save = async (token) => {
     return { error: 'ERROR' }
   }
 }
-export const get = async() => {
+export const get = async () => {
   return await AsyncStorage.getItem(key);
 }
 
-export const remove = async() => {
+export const remove = async () => {
   return await AsyncStorage.removeItem(key);
 }
 
-export const isToken = async() => {
-  return (await AsyncStorage.getItem(key)) !== undefined;
+export const isToken = async () => {
+  return await AsyncStorage.getItem(key);
 }
