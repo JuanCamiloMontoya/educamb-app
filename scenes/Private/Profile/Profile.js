@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLinking, useEffect } from 'react';
 import { ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from "react-router-native";
+import { Link, withRouter } from "react-router-native";
 import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch, View } from 'native-base';
 import { createForm } from 'rc-form';
 
@@ -9,7 +9,7 @@ import i18n from '../../../i18n/i18n'
 import { auth as AuthActions } from '../../../services/Auth/AuthActions'
 import user_img from '../../../assets/images/user.jpg'
 
-const Profile = () => {
+const Profile = (props) => {
 
   return (
     <View
@@ -52,4 +52,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default withRouter(Profile)
