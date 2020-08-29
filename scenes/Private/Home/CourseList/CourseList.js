@@ -1,14 +1,12 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Text, View, Icon, Button, Right } from 'native-base'
-import { Bar } from 'react-native-progress'
-
-import biodiversity from '../../../../assets/images/home/biodiversity2.png'
 import { Image, FlatList } from 'react-native'
-import { wp } from '../../../../common/constants/_Mixins'
-import styles from './CourseListStyles'
+import { Text, View, Icon, Button, Right } from 'native-base'
 import { useHistory } from 'react-router-native'
+
+import { wp } from '../../../../common/constants/_Mixins'
 import { thematic as thematicActions } from '../../../../services/Thematic/ThematicActions'
+import styles from './CourseListStyles'
 
 const CourseList = (props) => {
 
@@ -24,7 +22,7 @@ const CourseList = (props) => {
 
   return (
     <Fragment>
-      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingVertical: wp(1) }}>
+      <View style={styles.header__container}>
         <Button transparent style={{ flex: 1 }} onPress={() => history.goBack()}>
           <Icon name='arrow-back' style={{ color: "#555" }} />
         </Button>
@@ -35,38 +33,25 @@ const CourseList = (props) => {
         <FlatList
           data={thematic?.courses || []}
           numColumns={2}
-          renderItem={({ item, index }) => (
-            <View style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: "#FFF",
-              width: wp(45),
-              elevation: 3,
-              borderRadius: wp(2),
-              marginVertical: wp(2),
-              marginHorizontal: wp(3.3),
-              marginLeft: index % 2 === 0 ? wp(3.3) : 0,
-              padding: wp(2)
-            }}>
-              <Image style={{ width: wp(35), height: wp(35) }} source={{ uri: item.imageUrl }} resizeMode="cover" />
-              <Text style={{ color: "#555", fontWeight: 'bold', fontSize: wp(4.5), alignSelf: 'flex-start' }}>
-                {item.name}
-              </Text>
-              <Text style={{ color: "#555", fontSize: wp(3.4), alignSelf: 'flex-start', flexGrow: 1 }}>
-                {item.description}
-              </Text>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <Text style={{ color: "#555", fontSize: wp(3.4), flexGrow: 1 }}>
-                  {item.chapters.length} Capitulos
+          renderItem={({ item, index }) => {
+            const { name, description, chapters, imageUrl } = item
+            const dynamicStyles = { marginRight: index % 2 === 0 ? 0 : wp(3.3) }
+            return (
+              <View style={[styles.card__container, dynamicStyles]}>
+                <Image style={styles.card__image} source={{ uri: imageUrl }} />
+                <Text style={styles.card__title}>{name}</Text>
+                <Text style={styles.card__description}>{description}</Text>
+                <View style={styles.card__bottom}>
+                  <Text style={styles.card__count}>
+                    {chapters.length} Capitulos
                 </Text>
-                <Button success rounded onPress={() => openChapterList(item)} >
-                  <Icon name='play' />
-                </Button>
+                  <Button success rounded onPress={() => openChapterList(item)} >
+                    <Icon name='play' />
+                  </Button>
+                </View>
               </View>
-            </View>
-          )}
+            )
+          }}
           keyExtractor={({ id }) => id}
         />
       </View>

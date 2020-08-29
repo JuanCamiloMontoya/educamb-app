@@ -2,19 +2,20 @@ import { StyleSheet } from 'react-native'
 import { wp } from '../../../../common/constants/_Mixins'
 
 const styles = StyleSheet.create({
-  header_container: {
-    backgroundColor: 'transparent'
+  header__container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: wp(1)
   },
   header__title: {
     alignSelf: 'center',
     color: '#555',
     fontWeight: 'bold',
-    fontSize: wp(6),
-    flex: 3,
-    textAlign: 'center'
+    fontSize: wp(6)
   },
   header__body: {
-    flexGrow: 3
+    flexGrow: 1
   },
   content: {
     backgroundColor: '#E6F4EE',
@@ -27,23 +28,39 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(42.5),
+    backgroundColor: "#FFF",
+    width: wp(45),
     elevation: 3,
     borderRadius: wp(2),
     marginVertical: wp(2),
-    marginHorizontal: wp(5),
+    marginHorizontal: wp(3.3),
     padding: wp(2)
   },
   card__image: {
-    width: wp(38),
-    height: wp(38)
+    width: wp(35),
+    height: wp(35),
+    resizeMode: 'contain'
   },
   card__title: {
     color: "#555",
     fontWeight: 'bold',
     fontSize: wp(4.5),
-    textAlign: 'center',
-    marginBottom: wp(2)
+  },
+  card__description: {
+    color: "#555",
+    fontSize: wp(3.4),
+    flexGrow: 1
+  },
+  card__bottom: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  card__count: {
+    color: "#555",
+    fontSize: wp(3.4),
+    flexGrow: 1
   }
 })
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Image, TouchableOpacity, FlatList } from 'react-native'
 import { Text, Body, View, Header, Title } from 'native-base'
 import { Bar } from 'react-native-progress'
-import { withRouter, useHistory } from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import { thematic as thematicActions } from '../../../services/Thematic/ThematicActions'
 import { wp } from '../../../common/constants/_Mixins'
@@ -27,7 +27,7 @@ const Home = (props) => {
 
   return (
     <Fragment>
-      <Header style={styles.header_container}>
+      <Header style={styles.header__container}>
         <Body style={styles.header__body}>
           <Title style={styles.header__title}>
             Plan de estudio
@@ -39,16 +39,14 @@ const Home = (props) => {
           data={thematics}
           numColumns={2}
           renderItem={({ item, index }) => {
-            const { name, imageUrl, description } = item
-            const dynamicStyles = {
-              marginRight: index % 2 === 0 ? 0 : wp(3.3)
-            }
+            const { name, imageUrl } = item
+            const dynamicStyles = { marginRight: index % 2 === 0 ? 0 : wp(3.3) }
             return (
               <TouchableOpacity
                 onPress={() => openCourseList(item)}
                 style={[styles.card__container, dynamicStyles]}
               >
-                <Image style={styles.card__image} source={{ uri: imageUrl }} resizeMode="cover" />
+                <Image style={styles.card__image} source={{ uri: imageUrl }} />
                 <Text style={styles.card__title}>{name}</Text>
                 <Bar progress={0.3} width={wp(38)} />
               </TouchableOpacity>
@@ -61,4 +59,4 @@ const Home = (props) => {
   )
 }
 
-export default withRouter(Home)
+export default Home

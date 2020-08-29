@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { wp } from '../../../common/constants/_Mixins'
 
 const styles = StyleSheet.create({
-  header_container: {
+  header__container: {
     backgroundColor: 'transparent'
   },
   header__title: {
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   card__image: {
     width: wp(38),
-    height: wp(38)
+    height: wp(38),
+    resizeMode: 'contain'
   },
   card__title: {
     color: "#555",
