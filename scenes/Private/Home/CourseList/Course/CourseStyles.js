@@ -2,8 +2,11 @@ import { StyleSheet } from 'react-native'
 import { wp } from '../../../../../common/constants/_Mixins'
 
 const styles = StyleSheet.create({
-  header_container: {
-    backgroundColor: 'transparent'
+  header__container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: wp(1)
   },
   header__title: {
     alignSelf: 'center',
@@ -14,39 +17,38 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   header__body: {
-    flexGrow: 3
+    flexGrow: 1
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
     backgroundColor: '#E6F4EE',
-    elevation: 5,
-    paddingTop: wp(2),
+    elevation: 5
   },
-  card__container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: wp(42.5),
-    elevation: 3,
-    borderRadius: wp(2),
-    marginVertical: wp(2),
-    marginHorizontal: wp(5),
-    padding: wp(2)
+  content__top: {
+    flexDirection: 'row',
+    paddingBottom: wp(3),
+    borderBottomWidth: 1
   },
-  card__image: {
-    width: wp(38),
-    height: wp(38)
+  content__top__image: {
+    width: wp(35),
+    height: wp(35),
+    marginRight: wp(2),
+    resizeMode: 'contain'
   },
-  card__title: {
+  content__top__description: {
     color: "#555",
-    fontWeight: 'bold',
-    fontSize: wp(4.5),
-    textAlign: 'center',
-    marginBottom: wp(2)
-  }
+    fontSize: wp(4),
+    alignSelf: 'flex-start',
+    marginVertical: wp(2),
+    flexShrink: 1
+  },
+  content__bottom__button: {
+    width: wp(50),
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
 })
 
 export default styles
