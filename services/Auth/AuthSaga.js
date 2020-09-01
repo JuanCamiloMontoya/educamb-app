@@ -4,7 +4,7 @@ import * as TokenStorage from '../../common/storage/Token'
 import { auth } from "./AuthActions"
 
 function* login({ payload }) {
-  const response = yield Api.post("/auth/login", payload)
+  const response = yield Api.post("/auth/signin", payload)
   if (response.ok) {
     yield TokenStorage.save(response.payload?.token)
     yield put(auth.loginResponse(response.payload));
