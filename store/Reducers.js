@@ -5,12 +5,14 @@ import auth from '../services/Auth/AuthReducer'
 import user from '../services/User/UserReducer'
 import utilities from '../services/Utilities/UtilitiesReducer'
 import thematic from '../services/Thematic/ThematicReducer'
+import exam from '../services/Exam/ExamReducer'
 
 const appReducer = (history) => combineReducers({
   auth,
   user,
   utilities,
-  thematic
+  thematic,
+  exam
 })
 
 const rootReducer = (history) => {
