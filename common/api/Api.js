@@ -5,7 +5,8 @@ import { auth } from '../../services/Auth/AuthActions';
 
 export class Api {
 
-  post(url, data, formData) {
+  async post(url, data, formData) {
+    const token = await Token.get()
     let dataBody
 
     if (formData) {
@@ -20,16 +21,15 @@ export class Api {
           data[key].forEach(item => dataBody.append(key, item))
       })
     } else
-      dataBody = JSON.stringify(data);
+      dataBody = JSON.stringify(data)
 
     return fetch(`${API_URL}${url}`, {
       method: 'POST',
       headers: (formData ? {
-        'Authorization': `Bearer ${Token.get()}`
+        'Authorization': `Bearer ${token}`
       } : {
-          'Accept': 'application/json',
           'Content-type': 'application/json',
-          'Authorization': `Bearer ${Token.get()}`
+          'Authorization': `Bearer ${token}`
         }),
       body: dataBody
     }).then(async response => {
@@ -37,8 +37,7 @@ export class Api {
         store.dispatch(auth.logout());
         return response;
       }
-      response.payload = await response.json()
-      return response;
+      return await response.json()
     }).catch(err => err)
   }
 
