@@ -12,16 +12,9 @@ function* getByCourse({ payload: { id } }) {
   }
 }
 
-function* saveExam({ payload: { answers } }) {
-  try {
-    console.log("response", answers)
-    const response = yield Api.post(`/exam/response`, { answers })
-    console.log(response)
-
-  } catch (error) {
-
-    console.log("error", error)
-  }
+function* saveExam({ payload: { body, callback } }) {
+  const res = yield Api.post(`/exam/response`, body)
+  yield callback()
 }
 
 function* ActionWatcher() {
