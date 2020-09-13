@@ -3,13 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-native";
 import { Container, Content, Item, Input, Button, Text, Spinner, Picker, Icon, CheckBox, View } from 'native-base';
 import { createForm } from 'rc-form';
-import { ImageBackground } from 'react-native';
 
 import i18n from '../../../i18n/i18n'
-import LANGUAGES from '../../../common/constants/Languages'
 import { auth as AuthActions } from '../../../services/Auth/AuthActions'
-import { utilities as utilActions } from '../../../services/Utilities/UtilitiesActions'
-import PickerSelect from '../../../components/PickerSelect/PickerSelect'
 import FormItem from '../../../components/FormItem/FormItem'
 
 const initialValuesDev = {

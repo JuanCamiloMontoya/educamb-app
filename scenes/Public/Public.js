@@ -27,4 +27,4 @@ const Public = ({ history }) => {
   )
 }
 
-export default withRouter(Public)
+export default Public
