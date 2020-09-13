@@ -91,9 +91,8 @@ export class Api {
         return response;
       }
       return await response.json()
-    }).catch(err => { console.log(err) })
+    }).catch(err => err)
   }
-
 }
 
 export default new Api();
