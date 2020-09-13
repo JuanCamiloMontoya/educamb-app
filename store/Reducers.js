@@ -6,13 +6,17 @@ import user from '../services/User/UserReducer'
 import utilities from '../services/Utilities/UtilitiesReducer'
 import thematic from '../services/Thematic/ThematicReducer'
 import exam from '../services/Exam/ExamReducer'
+import course from '../services/Course/CourseReducer'
+import lesson from '../services/Lesson/LessonReducer'
 
 const appReducer = (history) => combineReducers({
   auth,
   user,
   utilities,
   thematic,
-  exam
+  course,
+  exam,
+  lesson
 })
 
 const rootReducer = (history) => {
