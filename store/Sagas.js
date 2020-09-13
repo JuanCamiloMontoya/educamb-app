@@ -4,7 +4,9 @@ import auth from '../services/Auth/AuthSaga'
 import user from '../services/User/UserSaga'
 import utilities from '../services/Utilities/UtilitiesSaga'
 import thematic from '../services/Thematic/ThematicSaga'
+import course from '../services/Course/CourseSaga'
 import exam from '../services/Exam/ExamSaga'
+import lesson from '../services/Lesson/LessonSaga'
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +14,8 @@ export default function* rootSaga() {
     fork(user),
     fork(utilities),
     fork(thematic),
-    fork(exam)
+    fork(course),
+    fork(exam),
+    fork(lesson)
   ])
 }

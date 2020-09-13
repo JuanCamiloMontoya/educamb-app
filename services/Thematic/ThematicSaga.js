@@ -4,7 +4,7 @@ import { thematic } from "./ThematicActions"
 
 
 function* getAll() {
-  const response = yield Api.get("/thematic?state=ACTIVE")
+  const response = yield Api.get("/thematic/courses?state=ACTIVE")
   if (response) {
     yield put(thematic.getAllResponse(response));
   } else {

@@ -5,8 +5,8 @@ import { auth } from "./AuthActions"
 
 function* login({ payload }) {
   const response = yield Api.post("/auth/signin", payload)
-  if (response.ok) {
-    yield TokenStorage.save(response.payload?.token)
+  if (response.success) {
+    yield TokenStorage.save(response?.token)
     yield put(auth.loginResponse(response.payload));
   } else {
     const err = new TypeError(response?.error ? response.error : 'ERROR_LOGIN')
