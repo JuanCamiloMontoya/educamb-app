@@ -9,6 +9,11 @@ export const { user } = createActions({
     GET_PROFILE_RESPONSE: (profile) => ({ profile }),
 
     PUT_PROFILE: (data) => ({ data }),
-    PUT_PROFILE_RESPONSE: (success) => ({ success })
+    PUT_PROFILE_RESPONSE: (success) => ({ success }),
+
+    SAVE_INQUIRY: (answers, callback) => ({ answers, callback }),
+
+    GET_INQUIRY: () => ({}),
+    GET_INQUIRY_RESPONSE: (inquiryCount) => ({ inquiryCount }),
   }
 })

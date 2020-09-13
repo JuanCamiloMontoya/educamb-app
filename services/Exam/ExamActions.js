@@ -5,6 +5,6 @@ export const { exam } = createActions({
     GET_BY_COURSE: (id) => ({ id }),
     GET_BY_COURSE_RESPONSE: (exam) => ({ exam }),
 
-    SAVE_EXAM: (answers) => ({ answers }),
+    SAVE_EXAM: (body, callback) => ({ body, callback }),
   }
 })
