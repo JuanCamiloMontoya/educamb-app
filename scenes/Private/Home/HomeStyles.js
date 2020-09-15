@@ -3,7 +3,11 @@ import { wp } from '../../../common/constants/_Mixins'
 
 const styles = StyleSheet.create({
   header__container: {
-    backgroundColor: 'transparent'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: wp(2.5),
   },
   header__title: {
     alignSelf: 'center',
