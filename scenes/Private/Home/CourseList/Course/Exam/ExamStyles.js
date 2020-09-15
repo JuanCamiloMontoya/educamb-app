@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { wp } from '../../../../../common/constants/_Mixins'
+import { wp } from '../../../../../../common/constants/_Mixins'
 
 const styles = StyleSheet.create({
   header__container: {
@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
   },
   content__top: {
     flexDirection: 'row',
-    paddingBottom: wp(3),
-    borderBottomWidth: 1
+    padding: wp(3),
+    borderBottomWidth: 1,
+    marginHorizontal: wp(3)
   },
   content__top__image: {
     width: wp(35),
