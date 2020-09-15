@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   content__top: {
     flexDirection: 'row',
-    paddingBottom: wp(3),
+    padding: wp(3),
     borderBottomWidth: 1
   },
   content__top__image: {

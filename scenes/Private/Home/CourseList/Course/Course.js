@@ -1,21 +1,43 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Text, Left, Body, DeckSwiper, Card, CardItem, Thumbnail, View, Icon, Button, ListItem, Right } from 'native-base'
-import { Bar } from 'react-native-progress'
+import { Text, View, Icon, Button, Right } from 'native-base'
 import YoutubePlayer from "react-native-youtube-iframe"
-import { useHistory } from 'react-router-native'
-import { Image, TouchableOpacity, FlatList } from 'react-native'
+import { useHistory, useParams, useLocation } from 'react-router-native'
+import { Image, TouchableOpacity, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 
-import { paddingHorizontal, paddingVertical, wp } from '../../../../../common/constants/_Mixins'
+import { wp } from '../../../../../common/constants/_Mixins'
 import styles from './CourseStyles'
 import ChapterCard from './Components/ChapterCard'
+import { course as courseActions } from '../../../../../services/Course/CourseActions'
+import { lesson as lessonActions } from '../../../../../services/Lesson/LessonActions'
+import { thematic as thematicActions } from '../../../../../services/Thematic/ThematicActions'
 
 const Course = (props) => {
 
   const [video, setVideo] = useState()
   const dispatch = useDispatch()
   const history = useHistory()
-  const { course } = useSelector(state => state.thematic)
+  const location = useLocation()
+  const { course, loading } = useSelector(state => state.course)
+  const { thematic } = useSelector(state => state.thematic)
+
+  const { getById, getById2 } = courseActions
+  const { addLessonUser } = lessonActions
+  const { getAll, setThematic } = thematicActions
+
+  const { courseId } = useParams()
+
+  useEffect(() => {
+    dispatch(getById(courseId))
+  }, [])
+
+  const handleChangeState = (event) => {
+    const callback = () => {
+      dispatch(getById2(courseId))
+      dispatch(getAll())
+    }
+    event == 'playing' && dispatch(addLessonUser(video.id, callback))
+  }
 
   return (
     <Fragment>
@@ -23,39 +45,61 @@ const Course = (props) => {
         <Button transparent style={{ flex: 1 }} onPress={() => history.goBack()}>
           <Icon name='arrow-back' style={{ color: "#555" }} />
         </Button>
-        <Text style={styles.header__title}>{course.name}</Text>
+        <Text style={styles.header__title}>{course?.name}</Text>
         <Right style={{ flex: 1 }} />
       </View>
       <View style={styles.content}>
-        {video ? (
-          <View style={{}}>
-            <YoutubePlayer
-              height={wp(56.3)}
-              width={wp(100)}
-              videoId={video?.youtubeId}
-              play={true}
-              webViewStyle={{ backgroundColor: '#1F8209' }}
-            />
-            <TouchableOpacity onPress={() => setVideo()} style={{ position: 'absolute', margin: wp(1), borderRadius: wp(5), backgroundColor: '#FFFFFF55' }}>
-              <Icon name="close" type="MaterialCommunityIcons" />
-            </TouchableOpacity>
-          </View>
-        ) : (
-            <View style={styles.content__top}>
-              <Image style={styles.content__top__image} source={{ uri: course.imageUrl }} />
-              <Text style={styles.content__top__description}>{course.description}</Text>
+        {loading && <ActivityIndicator size="large" color="#1F8209" style={{ marginTop: wp(5) }} />}
+        {!loading && <View style={{}}>
+          {video ? (
+            <View style={{}}>
+              <YoutubePlayer
+                height={wp(56.3)}
+                width={wp(100)}
+                videoId={video?.youtubeId}
+                play={true}
+                onChangeState={handleChangeState}
+                webViewStyle={{ backgroundColor: '#1F8209' }}
+              />
+              <TouchableOpacity onPress={() => setVideo()} style={{ position: 'absolute', margin: wp(1), borderRadius: wp(5), backgroundColor: '#FFFFFF55' }}>
+                <Icon name="close" type="MaterialCommunityIcons" />
+              </TouchableOpacity>
             </View>
-          )}
+          ) : (
+              <View style={[styles.content__top, { maxHeight: wp(56.3), alignItems: 'center' }]}>
+                <Image style={styles.content__top__image} source={{ uri: course?.imageUrl }} />
+                <ScrollView >
+                  <Text style={styles.content__top__description}>{course?.description}</Text>
+                </ScrollView>
+              </View>
+            )}
+        </View>}
         <FlatList
           data={course?.chapters || []}
-          ListFooterComponent={(
-            <View style={{ marginBottom: wp(5) }}>
-              <Button iconLeft success style={styles.content__bottom__button}>
-                <Icon name="play" type="MaterialCommunityIcons" />
-                <Text>Evaluación</Text>
-              </Button>
-            </View>
-          )}
+          style={{ paddingHorizontal: wp(2) }}
+          ListFooterComponent={() => {
+            let data = thematic
+            const index = data?.courses?.findIndex(item => item.id == courseId)
+            data.courses[index].percentage = course?.percentage
+            setThematic(data)
+            return (
+              <View style={{ marginVertical: wp(5), marginBottom: wp(20) }}>
+                {course?.percentage == '1' && course?.exams?.length > 0 && course.exams.map((exam, i) => (
+                  <View style={{ marginBottom: wp(5) }}>
+                    <Button
+                      onPress={() => history.push(`${location.pathname}/exam/${exam.id}`)}
+                      iconLeft
+                      success
+                      style={styles.content__bottom__button}
+                    >
+                      <Icon name="play" type="MaterialCommunityIcons" />
+                      <Text>{`Evaluación${course.exams.length > 1 ? ` ${(i + 1)}` : ''}`}</Text>
+                    </Button>
+                  </View>
+                ))}
+              </View>
+            )
+          }}
           renderItem={({ item: chapter }) => <ChapterCard {...{ chapter, video, setVideo }} />}
           keyExtractor={({ id }) => id}
         />
