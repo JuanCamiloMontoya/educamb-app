@@ -1,23 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Image, FlatList } from 'react-native'
 import { Text, View, Icon, Button, Right } from 'native-base'
 import { useHistory } from 'react-router-native'
 
 import { wp } from '../../../../common/constants/_Mixins'
-import { thematic as thematicActions } from '../../../../services/Thematic/ThematicActions'
 import styles from './CourseListStyles'
+import { Bar } from 'react-native-progress'
 
 const CourseList = (props) => {
 
-  const { getAll, setCourse } = thematicActions
-  const dispatch = useDispatch()
   const history = useHistory()
   const { thematic } = useSelector(state => state.thematic)
 
-  const openChapterList = (course) => {
-    dispatch(setCourse(course))
-    history.push('/home/course')
+  const openChapterList = (id) => {
+    history.push(`/home/course-list/course/${id}`)
   }
 
   return (
@@ -34,18 +31,16 @@ const CourseList = (props) => {
           data={thematic?.courses || []}
           numColumns={2}
           renderItem={({ item, index }) => {
-            const { name, description, chapters, imageUrl } = item
+            const { id, name, description, imageUrl, percentage } = item
             const dynamicStyles = { marginRight: index % 2 === 0 ? 0 : wp(3.3) }
             return (
               <View style={[styles.card__container, dynamicStyles]}>
                 <Image style={styles.card__image} source={{ uri: imageUrl }} />
                 <Text style={styles.card__title}>{name}</Text>
-                <Text style={styles.card__description}>{description}</Text>
+                <Text style={styles.card__description}>{description.slice(0, 90)}...</Text>
                 <View style={styles.card__bottom}>
-                  <Text style={styles.card__count}>
-                    {chapters.length} Capitulos
-                </Text>
-                  <Button success rounded onPress={() => openChapterList(item)} >
+                  <Bar progress={percentage} width={wp(25)} style={{ marginRight: wp(2) }} />
+                  <Button success rounded onPress={() => openChapterList(id)} >
                     <Icon name='play' />
                   </Button>
                 </View>
