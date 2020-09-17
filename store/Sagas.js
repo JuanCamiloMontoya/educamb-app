@@ -7,6 +7,7 @@ import thematic from '../services/Thematic/ThematicSaga'
 import course from '../services/Course/CourseSaga'
 import exam from '../services/Exam/ExamSaga'
 import lesson from '../services/Lesson/LessonSaga'
+import discussion from '../services/Discussion/DiscussionSaga'
 
 export default function* rootSaga() {
   yield all([
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     fork(thematic),
     fork(course),
     fork(exam),
-    fork(lesson)
+    fork(lesson),
+    fork(discussion)
   ])
 }
