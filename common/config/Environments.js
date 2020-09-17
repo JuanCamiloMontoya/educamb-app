@@ -1,2 +1,2 @@
 export const ENV = "local";
-export const API_URL = "http://192.168.100.9:4200/v1";
+export const API_URL = "https://educamb-api.herokuapp.com/v1";
