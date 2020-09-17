@@ -8,6 +8,7 @@ import thematic from '../services/Thematic/ThematicReducer'
 import exam from '../services/Exam/ExamReducer'
 import course from '../services/Course/CourseReducer'
 import lesson from '../services/Lesson/LessonReducer'
+import discussion from '../services/Discussion/DiscussionReducer'
 
 const appReducer = (history) => combineReducers({
   auth,
@@ -16,7 +17,8 @@ const appReducer = (history) => combineReducers({
   thematic,
   course,
   exam,
-  lesson
+  lesson,
+  discussion
 })
 
 const rootReducer = (history) => {
