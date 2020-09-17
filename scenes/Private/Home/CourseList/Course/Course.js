@@ -74,7 +74,7 @@ const Course = (props) => {
               </View>
             )}
         </View>}
-        <FlatList
+        {!loading && <FlatList
           data={course?.chapters || []}
           style={{ paddingHorizontal: wp(2) }}
           ListFooterComponent={() => {
@@ -102,7 +102,7 @@ const Course = (props) => {
           }}
           renderItem={({ item: chapter }) => <ChapterCard {...{ chapter, video, setVideo }} />}
           keyExtractor={({ id }) => id}
-        />
+        />}
       </View>
     </Fragment>
   )
